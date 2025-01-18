@@ -11,9 +11,11 @@ import {
   Compass,
   Tag
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigator = useNavigate();
 
   const menuItems = [
     {
@@ -69,6 +71,7 @@ export function Header() {
               Meus pedidos
             </a>
             <Button
+              onClick={() => navigator('/login')}
               variant="secondary"
               className="flex items-center gap-2 hover:bg-white/90"
             >
@@ -76,6 +79,7 @@ export function Header() {
               Entrar
             </Button>
             <Button
+              onClick={() => navigator('/register')}
               variant="outline"
               className="text-black border-white hover:bg-white"
             >
@@ -89,7 +93,7 @@ export function Header() {
               <Button
                 variant="outline"
                 size="icon"
-                className="md:hidden border-white text-white hover:bg-white hover:text-primary"
+                className="md:hidden border-white text-primary hover:bg-white"
               >
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Abrir menu</span>

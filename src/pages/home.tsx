@@ -10,11 +10,10 @@ export function HomePage() {
 
   return (
     <div className="w-full">
-      <section className="w-full py-8 md:py-12 bg-primary text-primary-foreground">
+      <section className="w-full py-8 md:py-12 bg-gradient-to-br from-primary via-blue-600 to-blue-900 text-primary-foreground">
         <div className="w-full max-w-[1400px] px-4 mx-auto">
           <div className="max-w-4xl mx-auto">
-
-            <h1 className="text-2xl md:text-4xl font-bold mb-6 md:mb-8">
+            <h1 className="text-2xl md:text-4xl font-bold mb-6 md:mb-8 text-white">
               Encontre as melhores passagens de ônibus para sua próxima viagem
             </h1>
 

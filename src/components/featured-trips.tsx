@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { useNavigate } from "react-router-dom";
 
 const trips = [
   {
@@ -34,12 +35,15 @@ const trips = [
 ];
 
 export function FeaturedTrips() {
+  const navigator = useNavigate();
   return (
     <section className="w-full py-8 md:py-12 bg-gray-50">
       <div className="w-full max-w-[1400px] px-4 mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl md:text-2xl font-bold">Viagens em destaque</h2>
-          <a href="#" className="text-sm md:text-base text-blue-600 hover:underline">
+          <a
+            onClick={() => navigator("/search")}
+            className="text-sm md:text-base text-blue-600 hover:underline cursor-pointer">
             Ver todas as viagens
           </a>
         </div>
@@ -76,7 +80,9 @@ export function FeaturedTrips() {
                           R$ {trip.price.toFixed(2).replace(".", ",")}
                         </p>
                       </div>
-                      <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                      <Button
+                        onClick={() => navigator(`/search`)}
+                        size="sm" className="bg-blue-600 hover:bg-blue-700">
                         Ver detalhes
                       </Button>
                     </div>

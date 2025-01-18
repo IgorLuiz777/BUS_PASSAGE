@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { useNavigate } from "react-router-dom";
 
 const destinations = [
   {
@@ -37,6 +38,7 @@ const destinations = [
 ];
 
 export function FeaturedDestinations() {
+  const navigator = useNavigate();
   return (
     <section className="w-full py-8 md:py-12">
       <div className="w-full max-w-[1400px] px-4 mx-auto">
@@ -56,7 +58,7 @@ export function FeaturedDestinations() {
           <CarouselContent className="-ml-2 md:-ml-4">
             {destinations.map((destination) => (
               <CarouselItem key={destination.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                <Card className="group overflow-hidden">
+                <Card className="group overflow-hidden cursor-pointer" onClick={() => navigator(`/search`)}>
                   <div className="relative aspect-[16/9]">
                     <img
                       src={destination.image}
