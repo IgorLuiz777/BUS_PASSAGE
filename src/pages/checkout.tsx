@@ -1,33 +1,35 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { FormProvider, useForm } from "react-hook-form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { z } from "zod";
+import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { useNavigate } from "react-router-dom";
 import { Clock, MapPin, ChevronLeft, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
-interface PassengerForm {
+interface PassengerData {
   fullName: string;
   documentType: "cpf" | "rg";
   documentNumber: string;
 }
+
+interface PaymentForm {
+  cardNumber: string;
+  cardName: string;
+  expiryDate: string;
+  cvv: string;
+}
+
+const paymentSchema = z.object({
+  cardNumber: z.string().min(16, "Número do cartão inválido"),
+  cardName: z.string().min(3, "Nome no cartão é obrigatório"),
+  expiryDate: z.string().min(5, "Data de validade inválida"),
+  cvv: z.string().min(3, "CVV inválido"),
+});
 
 const passengerSchema = z.object({
   fullName: z.string().min(3, "Nome completo é obrigatório"),
@@ -37,21 +39,22 @@ const passengerSchema = z.object({
   documentNumber: z.string().min(1, "Número do documento é obrigatório"),
 });
 
-const paymentSchema = z.object({
-  cardNumber: z.string().min(16, "Número do cartão inválido"),
-  cardName: z.string().min(3, "Nome no cartão é obrigatório"),
-  expiryDate: z.string().min(5, "Data de validade inválida"),
-  cvv: z.string().min(3, "CVV inválido"),
-});
-
-type PaymentForm = z.infer<typeof paymentSchema>;
-
 export function CheckoutPage() {
   const navigate = useNavigate();
+  // const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>("credit");
   const [isLoading, setIsLoading] = useState(false);
-  const [passengers, setPassengers] = useState<PassengerForm[]>([
+  const [passengers, setPassengers] = useState<PassengerData[]>([
     { fullName: "", documentType: "cpf", documentNumber: "" },
   ]);
+
+  const passengerForm = useForm<PassengerData>({
+    resolver: zodResolver(passengerSchema),
+    defaultValues: {
+      fullName: "",
+      documentType: "cpf",
+      documentNumber: "",
+    }
+  });
 
   const paymentForm = useForm<PaymentForm>({
     resolver: zodResolver(paymentSchema),
@@ -60,8 +63,29 @@ export function CheckoutPage() {
       cardName: "",
       expiryDate: "",
       cvv: "",
-    },
+    }
   });
+
+  const handleSubmit = async (data: PaymentForm) => {
+    setIsLoading(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    console.log("Payment data:", data);
+    console.log("Passengers:", passengers);
+    navigate("/success");
+    setIsLoading(false);
+  };
+
+  const addPassenger = () => {
+    setPassengers([
+      ...passengers,
+      { fullName: "", documentType: "cpf", documentNumber: "" },
+    ]);
+  };
+
+  const removePassenger = (index: number) => {
+    setPassengers(passengers.filter((_, i) => i !== index));
+  };
 
   // Mock trip data
   const trip = {
@@ -79,27 +103,6 @@ export function CheckoutPage() {
     type: "LEITO",
     price: 214.99,
     selectedSeats: ["12", "13", "14"],
-  };
-
-  const addPassenger = () => {
-    setPassengers([
-      ...passengers,
-      { fullName: "", documentType: "cpf", documentNumber: "" },
-    ]);
-  };
-
-  const removePassenger = (index: number) => {
-    setPassengers(passengers.filter((_, i) => i !== index));
-  };
-
-  const handleSubmit = async (data: PaymentForm) => {
-    setIsLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("Payment data:", data);
-    console.log("Passengers:", passengers);
-    navigate("/success");
-    setIsLoading(false);
   };
 
   const total = trip.price * passengers.length;
@@ -167,7 +170,7 @@ export function CheckoutPage() {
               </Button>
             </div>
 
-            {passengers.map((passenger, index) => (
+            {passengers.map((_, index) => (
               <div
                 key={index}
                 className="p-4 border rounded-lg mb-4 last:mb-0"
@@ -185,53 +188,52 @@ export function CheckoutPage() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <FormLabel>Nome completo</FormLabel>
-                    <Input
-                      value={passenger.fullName}
-                      onChange={(e) => {
-                        const newPassengers = [...passengers];
-                        newPassengers[index].fullName = e.target.value;
-                        setPassengers(newPassengers);
-                      }}
-                      placeholder="Digite o nome completo"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
+                <FormProvider {...passengerForm}>
+                  <form className="space-y-4">
                     <div>
-                      <FormLabel>Tipo de documento</FormLabel>
-                      <Select
-                        value={passenger.documentType}
-                        onValueChange={(value: "cpf" | "rg") => {
-                          const newPassengers = [...passengers];
-                          newPassengers[index].documentType = value;
-                          setPassengers(newPassengers);
-                        }}
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="cpf">CPF</SelectItem>
-                          <SelectItem value="rg">RG</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <FormLabel>Número do documento</FormLabel>
+                      <FormLabel>Nome Completo</FormLabel>
                       <Input
-                        value={passenger.documentNumber}
-                        onChange={(e) => {
-                          const newPassengers = [...passengers];
-                          newPassengers[index].documentNumber = e.target.value;
-                          setPassengers(newPassengers);
-                        }}
-                        placeholder="Digite o número"
+                        {...passengerForm.register("fullName")}
+                        placeholder="Digite seu nome completo"
                       />
+                      {passengerForm.formState.errors.fullName && (
+                        <p className="text-red-500 text-sm">
+                          {passengerForm.formState.errors.fullName.message}
+                        </p>
+                      )}
                     </div>
-                  </div>
-                </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <FormLabel>Tipo de Documento</FormLabel>
+                        <Select
+                          value={passengerForm.watch("documentType")}
+                          onValueChange={(value) => passengerForm.setValue("documentType", value as "cpf" | "rg")}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="cpf">CPF</SelectItem>
+                            <SelectItem value="rg">RG</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <FormLabel>Número do Documento</FormLabel>
+                        <Input
+                          {...passengerForm.register("documentNumber")}
+                          placeholder="Digite o número"
+                        />
+                        {passengerForm.formState.errors.documentNumber && (
+                          <p className="text-red-500 text-sm">
+                            {passengerForm.formState.errors.documentNumber.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </form>
+                </FormProvider>
               </div>
             ))}
           </Card>
@@ -298,7 +300,7 @@ export function CheckoutPage() {
                   </div>
                   <div className="col-span-full">
                     <h2 className="text-xl font-semibold mb-4">Detalhes dos Passageiros</h2>
-                    {passengers.map((passenger, index) => (
+                    {passengers.map((_, index) => (
                       <div key={index} className="mb-4 p-4 border rounded">
                         <div className="flex justify-between items-center">
                           <h3>Passageiro {index + 1}</h3>
@@ -315,30 +317,26 @@ export function CheckoutPage() {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <label>Nome completo</label>
+                            <FormLabel>Nome Completo</FormLabel>
                             <Input
-                              placeholder="Digite o nome completo"
-                              value={passenger.fullName}
-                              onChange={(e) => {
-                                const newPassengers = [...passengers];
-                                newPassengers[index].fullName = e.target.value;
-                                setPassengers(newPassengers);
-                              }}
+                              {...passengerForm.register("fullName")}
+                              placeholder="Digite seu nome completo"
                             />
+                            {passengerForm.formState.errors.fullName && (
+                              <p className="text-red-500 text-sm">
+                                {passengerForm.formState.errors.fullName.message}
+                              </p>
+                            )}
                           </div>
                           <div className="grid grid-cols-2 gap-4">
                             <div>
-                              <label>Tipo de documento</label>
+                              <FormLabel>Tipo de Documento</FormLabel>
                               <Select
-                                value={passenger.documentType}
-                                onValueChange={(value: "cpf" | "rg") => {
-                                  const newPassengers = [...passengers];
-                                  newPassengers[index].documentType = value;
-                                  setPassengers(newPassengers);
-                                }}
+                                value={passengerForm.watch("documentType")}
+                                onValueChange={(value) => passengerForm.setValue("documentType", value as "cpf" | "rg")}
                               >
                                 <SelectTrigger>
-                                  <SelectValue placeholder="Tipo" />
+                                  <SelectValue placeholder="Selecione" />
                                 </SelectTrigger>
                                 <SelectContent>
                                   <SelectItem value="cpf">CPF</SelectItem>
@@ -347,16 +345,16 @@ export function CheckoutPage() {
                               </Select>
                             </div>
                             <div>
-                              <label>Número do documento</label>
+                              <FormLabel>Número do Documento</FormLabel>
                               <Input
+                                {...passengerForm.register("documentNumber")}
                                 placeholder="Digite o número"
-                                value={passenger.documentNumber}
-                                onChange={(e) => {
-                                  const newPassengers = [...passengers];
-                                  newPassengers[index].documentNumber = e.target.value;
-                                  setPassengers(newPassengers);
-                                }}
                               />
+                              {passengerForm.formState.errors.documentNumber && (
+                                <p className="text-red-500 text-sm">
+                                  {passengerForm.formState.errors.documentNumber.message}
+                                </p>
+                              )}
                             </div>
                           </div>
                         </div>

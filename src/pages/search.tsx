@@ -126,25 +126,25 @@ export function SearchPage() {
   const [departureDate, setDepartureDate] = useState<Date>();
   const [returnDate, setReturnDate] = useState<Date>();
   const [hasGratuity, setHasGratuity] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<string>("19/jan");
+  // const [selectedDate, setSelectedDate] = useState<string>("19/jan");
   const [isLoading, setIsLoading] = useState(false);
   const [passengers, setPassengers] = useState(1);
-  const [selectedFilters, setSelectedFilters] = useState({
-    types: [] as string[],
-    companies: [] as string[],
-    departureTimes: [] as string[],
-  });
+  // const [selectedFilters, setSelectedFilters] = useState({
+  //   types: [] as string[],
+  //   companies: [] as string[],
+  //   departureTimes: [] as string[],
+  // });
   const navigator = useNavigate();
 
-  const dates = [
-    { day: 17, weekDay: "sexta", month: "jan" },
-    { day: 18, weekDay: "sábado", month: "jan" },
-    { day: 19, weekDay: "domingo", month: "jan" },
-    { day: 20, weekDay: "segunda", month: "jan" },
-    { day: 21, weekDay: "terça", month: "jan" },
-    { day: 22, weekDay: "quarta", month: "jan" },
-    { day: 23, weekDay: "quinta", month: "jan" }
-  ];
+  // const dates = [
+  //   { day: 17, weekDay: "sexta", month: "jan" },
+  //   { day: 18, weekDay: "sábado", month: "jan" },
+  //   { day: 19, weekDay: "domingo", month: "jan" },
+  //   { day: 20, weekDay: "segunda", month: "jan" },
+  //   { day: 21, weekDay: "terça", month: "jan" },
+  //   { day: 22, weekDay: "quarta", month: "jan" },
+  //   { day: 23, weekDay: "quinta", month: "jan" }
+  // ];
 
   const handleSearch = () => {
     setIsLoading(true);
@@ -154,14 +154,14 @@ export function SearchPage() {
     }, 1500);
   };
 
-  const handleFilterChange = (type: string, value: string) => {
-    setSelectedFilters(prev => ({
-      ...prev,
-      [type]: prev[type as keyof typeof prev].includes(value)
-        ? prev[type as keyof typeof prev].filter(item => item !== value)
-        : [...prev[type as keyof typeof prev], value]
-    }));
-  };
+  // const handleFilterChange = (type: string, value: string) => {
+  //   setSelectedFilters(prev => ({
+  //     ...prev,
+  //     [type]: prev[type as keyof typeof prev].includes(value)
+  //       ? prev[type as keyof typeof prev].filter(item => item !== value)
+  //       : [...prev[type as keyof typeof prev], value]
+  //   }));
+  // };
 
   return (
     <TooltipProvider>

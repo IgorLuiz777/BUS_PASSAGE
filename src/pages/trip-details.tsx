@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -91,7 +91,7 @@ const AmenityIcon = ({ type }: { type: string }) => {
 };
 
 export function TripDetailsPage() {
-  const { id } = useParams();
+  // const { id } = useParams();
   const navigate = useNavigate();
   const [selectedFloor, setSelectedFloor] = useState<"lower" | "upper">("lower");
   const [seats] = useState<Seat[]>(generateSeats());
