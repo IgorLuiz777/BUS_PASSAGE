@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
 import { HomePage } from "@/pages/home";
 import { SearchPage } from "@/pages/search";
 import { SignInPage } from "@/pages/auth/sign-in";
 import { SignUpPage } from "@/pages/auth/sign-up";
 import { CheckoutPage } from "@/pages/checkout";
 import { SuccessPage } from "@/pages/success";
-import { OrdersPage } from "@/pages/orders";
 import "./App.css";
 import { TripDetailsPage } from "./pages/trip-details";
+import { Footer } from "./components/footer";
+import { OrdersPage } from "./pages/orders";
 
 export default function App() {
   return (

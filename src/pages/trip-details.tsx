@@ -208,7 +208,7 @@ export function TripDetailsPage() {
             <Card className="p-6">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold">Selecione seus assentos</h2>
-                <div className="flex gap-4">
+                <div className="flex flex-col md:flex-row gap-4">
                   <Button
                     variant={selectedFloor === "upper" ? "default" : "outline"}
                     onClick={() => setSelectedFloor("upper")}
