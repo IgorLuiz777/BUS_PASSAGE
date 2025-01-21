@@ -124,7 +124,7 @@ export function Header() {
                       ? "bg-primary text-white hover:bg-primary/90"
                         : item.variant === "outline"
                         ? "border-primary text-primary hover:bg-primary/10"
-                        : "text-gray-700 hover:bg-gray-100"
+                        : "text-gray-700 hover:bg-gray-100 bg-gray-100/70"
                       }`}
                     onClick={() => {
                       item.onClick();

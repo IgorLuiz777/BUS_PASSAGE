@@ -168,7 +168,7 @@ export function TripDetailsPage() {
                   <div className="flex items-center gap-2">
                     {mockTrip.amenities.map((amenity) => (
                       <Tooltip key={amenity}>
-                        <TooltipTrigger>
+                        <TooltipTrigger className="bg-gray-100/70">
                           <div className="p-1.5 bg-gray-100 rounded-md">
                             <AmenityIcon type={amenity} />
                           </div>

@@ -269,7 +269,7 @@ export function SearchPage() {
                   Tenho direito à Gratuidade
                 </label>
                 <Tooltip>
-                  <TooltipTrigger className="bg-gray-100">
+                  <TooltipTrigger className="bg-gray-100/70">
                     <Info className="h-4 w-4 text-muted-foreground" />
                   </TooltipTrigger>
                   <TooltipContent>
@@ -382,7 +382,7 @@ export function SearchPage() {
                         <div className="flex items-center gap-2">
                           {trip.amenities.map((amenity) => (
                             <Tooltip key={amenity}>
-                              <TooltipTrigger>
+                              <TooltipTrigger className="bg-gray-100/70">
                                 <div className="p-1.5 bg-gray-100 rounded-md">
                                   <AmenityIcon type={amenity} />
                                 </div>
