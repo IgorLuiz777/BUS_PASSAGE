@@ -256,6 +256,7 @@ export function SearchPage() {
           <div className="mt-4 flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2">
               <Checkbox
+                className="bg-gray-100"
                 id="gratuity"
                 checked={hasGratuity}
                 onCheckedChange={(checked) => setHasGratuity(checked as boolean)}
@@ -268,7 +269,7 @@ export function SearchPage() {
                   Tenho direito à Gratuidade
                 </label>
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger className="bg-gray-100">
                     <Info className="h-4 w-4 text-muted-foreground" />
                   </TooltipTrigger>
                   <TooltipContent>

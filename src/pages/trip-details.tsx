@@ -120,7 +120,7 @@ export function TripDetailsPage() {
         <div className="mb-8">
           <Button
             variant="ghost"
-            className="mb-4"
+            className="mb-4 bg-white text-primary hover:bg-primary hover:text-white border border-primary"
             onClick={() => window.history.back()}
           >
             <ChevronLeft className="w-4 h-4 mr-2" />

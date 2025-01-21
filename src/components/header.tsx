@@ -105,7 +105,7 @@ export function Header() {
               <Button
                 variant="outline"
                 size="icon"
-                className="md:hidden border-white text-primary hover:bg-white"
+                className="md:hidden bg-white border-primary text-primary "
               >
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Abrir menu</span>
@@ -120,10 +120,10 @@ export function Header() {
                   <Button
                     key={index}
                     variant={item.variant}
-                    className={`w-full justify-start gap-2 text-left ${item.variant === "default"
-                        ? "bg-primary text-white hover:bg-primary/90"
+                    className={`w-full justify-start gap-2 text-left bg-white ${item.variant === "default"
+                      ? "bg-primary text-white hover:bg-primary/90"
                         : item.variant === "outline"
-                        ? "border-primary text-primary hover:bg-primary hover:text-white"
+                        ? "border-primary text-primary hover:bg-primary/10"
                         : "text-gray-700 hover:bg-gray-100"
                       }`}
                     onClick={() => {

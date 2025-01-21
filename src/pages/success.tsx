@@ -24,7 +24,7 @@ export function SuccessPage() {
           </Button>
           <Button
             variant="outline"
-            className="w-full"
+            className="w-full bg-white text-primary hover:bg-primary hover:text-white border border-primary"
             onClick={() => navigate("/")}
           >
             <Home className="w-4 h-4 mr-2" />
