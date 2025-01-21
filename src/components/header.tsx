@@ -22,31 +22,37 @@ export function Header() {
       icon: <User className="w-4 h-4" />,
       label: "Entrar",
       variant: "default" as const,
+      onClick: () => navigator("/login"),
     },
     {
       icon: <UserPlus className="w-4 h-4" />,
       label: "Criar conta",
       variant: "outline" as const,
+      onClick: () => navigator("/register"),
     },
     {
       icon: <Package className="w-4 h-4" />,
       label: "Meus pedidos",
       variant: "ghost" as const,
+      onClick: () => navigator("/orders"),
     },
     {
       icon: <HelpCircle className="w-4 h-4" />,
       label: "Ajuda",
       variant: "ghost" as const,
+      onClick: () => { },
     },
     {
       icon: <Tag className="w-4 h-4" />,
       label: "Ofertas",
       variant: "ghost" as const,
+      onClick: () => { },
     },
     {
       icon: <Compass className="w-4 h-4" />,
       label: "Explorar",
       variant: "ghost" as const,
+      onClick: () => { },
     },
   ];
 
@@ -55,7 +61,10 @@ export function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <a href="/" className="flex hover:text-gray-200 items-center gap-2 text-xl font-bold text-white">
+            <a
+              onClick={() => navigator("/")}
+              className="flex hover:text-gray-200 items-center gap-2 text-xl font-bold text-white cursor-pointer"
+            >
               <Bus className="w-6 h-6" />
               BusTrip
             </a>
@@ -66,7 +75,10 @@ export function Header() {
               <HelpCircle className="w-4 h-4" />
               Ajuda
             </a>
-            <a href="#" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors">
+            <a
+              onClick={() => navigator("/orders")}
+              className="flex items-center gap-2 text-white/90 hover:text-white transition-colors cursor-pointer"
+            >
               <Package className="w-4 h-4" />
               Meus pedidos
             </a>
@@ -108,14 +120,16 @@ export function Header() {
                   <Button
                     key={index}
                     variant={item.variant}
-                    className={`w-full justify-start gap-2 text-left ${
-                      item.variant === "default"
+                    className={`w-full justify-start gap-2 text-left ${item.variant === "default"
                         ? "bg-primary text-white hover:bg-primary/90"
                         : item.variant === "outline"
                         ? "border-primary text-primary hover:bg-primary hover:text-white"
                         : "text-gray-700 hover:bg-gray-100"
-                    }`}
-                    onClick={() => setIsOpen(false)}
+                      }`}
+                    onClick={() => {
+                      item.onClick();
+                      setIsOpen(false);
+                    }}
                   >
                     {item.icon}
                     {item.label}

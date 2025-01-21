@@ -41,6 +41,12 @@ export default {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
       },
+      backgroundColor: {
+        'default-button': 'hsl(217, 91%, 60%)',
+      },
+      textColor: {
+        'default-button': 'hsl(0, 0%, 98%)',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },

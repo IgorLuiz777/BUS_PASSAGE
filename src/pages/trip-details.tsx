@@ -91,7 +91,6 @@ const AmenityIcon = ({ type }: { type: string }) => {
 };
 
 export function TripDetailsPage() {
-  // const { id } = useParams();
   const navigate = useNavigate();
   const [selectedFloor, setSelectedFloor] = useState<"lower" | "upper">("lower");
   const [seats] = useState<Seat[]>(generateSeats());
@@ -109,6 +108,11 @@ export function TripDetailsPage() {
   };
 
   const total = mockTrip.price.current * selectedSeats.length;
+
+  // Dividir os assentos em grupos (esquerda e direita)
+  const currentFloorSeats = seats.filter((seat) => seat.floor === selectedFloor);
+  const leftSeats = currentFloorSeats.slice(0, currentFloorSeats.length / 2);
+  const rightSeats = currentFloorSeats.slice(currentFloorSeats.length / 2);
 
   return (
     <TooltipProvider>
@@ -246,10 +250,45 @@ export function TripDetailsPage() {
                 </div>
 
                 {/* Assentos */}
-                <div className="grid grid-cols-4 gap-2 p-4 bg-gray-50 rounded-lg">
-                  {seats
-                    .filter((seat) => seat.floor === selectedFloor)
-                    .map((seat) => (
+                <div className="flex justify-between gap-16 p-4 bg-gray-50 rounded-lg relative">
+                  {/* Palavra CORREDOR na vertical */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center items-center">
+                    <div className="writing-vertical text-gray-400 text-sm tracking-[0.2em]">
+                      CORREDOR
+                    </div>
+                  </div>
+
+                  {/* Fileiras da esquerda */}
+                  <div className="grid grid-cols-2 gap-2">
+                    {leftSeats.map((seat) => (
+                      <Tooltip key={seat.number}>
+                        <div className="border-none w-full gap-2">
+                          <button
+                            className={cn(
+                              "w-12 h-12 rounded-t-lg border-2 flex items-center justify-center font-medium transition-colors",
+                              seat.status === "occupied" && "bg-gray-300 cursor-not-allowed",
+                              seat.status === "available" && "bg-primary text-white hover:bg-primary/90",
+                              selectedSeats.includes(seat.number) && "bg-green-500 border-green-600 hover:bg-green-600 hover:border-green-700 text-white",
+                              "disabled:cursor-not-allowed"
+                            )}
+                            onClick={() => handleSeatClick(seat)}
+                            disabled={seat.status === "occupied"}
+                          >
+                            {seat.number}
+                          </button>
+                        </div>
+                        <TooltipContent>
+                          <p>
+                            Assento {seat.number} - {seat.position === "window" ? "Janela" : "Corredor"}
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    ))}
+                  </div>
+
+                  {/* Fileiras da direita */}
+                  <div className="grid grid-cols-2 gap-2">
+                    {rightSeats.map((seat) => (
                       <Tooltip key={seat.number}>
                         <div className="border-none w-full">
                           <button
@@ -273,6 +312,7 @@ export function TripDetailsPage() {
                         </TooltipContent>
                       </Tooltip>
                     ))}
+                  </div>
                 </div>
 
                 {/* Traseira do ônibus */}
@@ -331,7 +371,8 @@ export function TripDetailsPage() {
                   </p>
                 </div>
               )}
-            </Card> </div>
+            </Card>
+          </div>
         </div>
       </div>
     </TooltipProvider>

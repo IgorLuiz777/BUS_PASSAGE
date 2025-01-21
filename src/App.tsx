@@ -1,18 +1,20 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 import { HomePage } from "@/pages/home";
 import { SearchPage } from "@/pages/search";
 import { SignInPage } from "@/pages/auth/sign-in";
 import { SignUpPage } from "@/pages/auth/sign-up";
 import { CheckoutPage } from "@/pages/checkout";
 import { SuccessPage } from "@/pages/success";
+import { OrdersPage } from "@/pages/orders";
 import "./App.css";
 import { TripDetailsPage } from "./pages/trip-details";
 
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen w-full bg-background">
+      <div className="min-h-screen w-full bg-background flex flex-col">
         <Routes>
           <Route path="/login" element={<SignInPage />} />
           <Route path="/register" element={<SignUpPage />} />
@@ -21,9 +23,10 @@ export default function App() {
             element={
               <>
                 <Header />
-                <main className="w-full">
+                <main className="w-full flex-1">
                   <HomePage />
                 </main>
+                <Footer />
               </>
             }
           />
@@ -32,9 +35,10 @@ export default function App() {
             element={
               <>
                 <Header />
-                <main className="w-full">
+                <main className="w-full flex-1">
                   <SearchPage />
                 </main>
+                <Footer />
               </>
             }
           />
@@ -43,9 +47,10 @@ export default function App() {
             element={
               <>
                 <Header />
-                <main className="w-full">
+                <main className="w-full flex-1">
                   <TripDetailsPage />
                 </main>
+                <Footer />
               </>
             }
           />
@@ -54,9 +59,10 @@ export default function App() {
             element={
               <>
                 <Header />
-                <main className="w-full">
+                <main className="w-full flex-1">
                   <CheckoutPage />
                 </main>
+                <Footer />
               </>
             }
           />
@@ -65,9 +71,22 @@ export default function App() {
             element={
               <>
                 <Header />
-                <main className="w-full">
+                <main className="w-full flex-1">
                   <SuccessPage />
                 </main>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/orders"
+            element={
+              <>
+                <Header />
+                <main className="w-full flex-1">
+                  <OrdersPage />
+                </main>
+                <Footer />
               </>
             }
           />
