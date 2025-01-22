@@ -58,7 +58,7 @@ export function FeaturedDestinations() {
           <CarouselContent className="-ml-2 md:-ml-4">
             {destinations.map((destination) => (
               <CarouselItem key={destination.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                <Card className="group overflow-hidden cursor-pointer" onClick={() => navigator(`/search`)}>
+                <Card className="group overflow-hidden cursor-pointer" onClick={() => navigator(`/pesquisa`)}>
                   <div className="relative aspect-[16/9]">
                     <img
                       src={destination.image}

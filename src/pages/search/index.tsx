@@ -34,7 +34,7 @@ import {
   TooltipProvider
 } from "@/components/ui/tooltip";
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 
@@ -409,7 +409,7 @@ export function SearchPage() {
                       </div>
                       <div className="space-y-2">
                         <Button
-                          onClick={() => navigator('/trip/1')}
+                          onClick={() => navigator('/detalhe-passagem/1')}
                           className="w-full">
                           Selecionar
                         </Button>

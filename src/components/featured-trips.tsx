@@ -42,7 +42,7 @@ export function FeaturedTrips() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl md:text-2xl font-bold">Viagens em destaque</h2>
           <a
-            onClick={() => navigator("/search")}
+            onClick={() => navigator("/pesquisa")}
             className="text-sm md:text-base text-blue-600 hover:underline cursor-pointer">
             Ver todas as viagens
           </a>
@@ -81,7 +81,7 @@ export function FeaturedTrips() {
                         </p>
                       </div>
                       <Button
-                        onClick={() => navigator(`/search`)}
+                        onClick={() => navigator(`/pesquisa`)}
                         size="sm" className="bg-blue-600 hover:bg-blue-700">
                         Ver detalhes
                       </Button>

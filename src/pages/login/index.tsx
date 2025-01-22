@@ -1,18 +1,15 @@
 import { Link } from "react-router-dom";
-import { SignUpForm } from "@/components/auth/sign-up-form";
+import { LoginForm } from "@/pages/login/components/loginForm";
 import { Bus } from "lucide-react";
 
-export function SignUpPage() {
+export function SignInPage() {
   return (
     <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0">
       <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
         <div className="absolute inset-0 bg-gradient-to-br from-primary via-blue-600 to-blue-900 text-primary-foreground" />
-        <div className="relative z-20 flex items-center justify-center text-lg font-medium">
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-2xl font-bold text-white hover:text-gray-200"
-          >
-            <Bus className="h-8 w-8 mx-auto" />
+        <div className="relative z-20 flex items-center justify-center align-center text-center text-lg font-medium">
+          <Link to="/" className="flex text-center  text-white hover:text-gray-200 items-center gap-2 text-2xl font-bold">
+            <Bus className="h-8 w-8" />
             BusTrip
           </Link>
         </div>
@@ -33,20 +30,20 @@ export function SignUpPage() {
           </div>
           <div className="flex flex-col space-y-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">
-              Criar uma conta
+              Entrar na sua conta
             </h1>
             <p className="text-sm text-muted-foreground">
-              Preencha os dados abaixo para criar sua conta
+              Digite seu e-mail e senha para entrar
             </p>
           </div>
-          <SignUpForm />
+          <LoginForm />
           <p className="px-8 text-center text-sm text-muted-foreground">
-            Já tem uma conta?{" "}
+            Não tem uma conta?{" "}
             <Link
-              to="/login"
+              to="/register"
               className="underline underline-offset-4 hover:text-primary"
             >
-              Faça login
+              Criar conta
             </Link>
           </p>
         </div>

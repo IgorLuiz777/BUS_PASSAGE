@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 import type { SearchParams } from "@/types";
 import { useNavigate } from "react-router-dom";
 
@@ -177,7 +177,7 @@ export function SearchForm({ onSubmit, className }: SearchFormProps) {
         </div>
 
         <Button
-          onClick={() => navigator('/search')}
+          onClick={() => navigator('/pesquisa')}
           type="submit" className="w-full md:w-auto">
           Buscar passagens
         </Button>

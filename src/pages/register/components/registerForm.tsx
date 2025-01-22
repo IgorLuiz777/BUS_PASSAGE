@@ -24,7 +24,7 @@ const signUpSchema = z.object({
 
 type SignUpValues = z.infer<typeof signUpSchema>;
 
-export function SignUpForm() {
+export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 

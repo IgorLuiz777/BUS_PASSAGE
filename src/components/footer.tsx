@@ -1,11 +1,11 @@
 import { Bus, Facebook, Instagram, Twitter, Youtube } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export function Footer() {
+export function Footer({ className = '' }: { className?: string }) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
+    <footer className={`bg-gray-900 text-gray-300 ${className}`}>
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>

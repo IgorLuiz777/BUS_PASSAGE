@@ -22,19 +22,19 @@ export function Header() {
       icon: <User className="w-4 h-4" />,
       label: "Entrar",
       variant: "default" as const,
-      onClick: () => navigator("/login"),
+      onClick: () => navigator("/entrar"),
     },
     {
       icon: <UserPlus className="w-4 h-4" />,
       label: "Criar conta",
       variant: "outline" as const,
-      onClick: () => navigator("/register"),
+      onClick: () => navigator("/criar-conta"),
     },
     {
       icon: <Package className="w-4 h-4" />,
       label: "Meus pedidos",
       variant: "ghost" as const,
-      onClick: () => navigator("/orders"),
+      onClick: () => navigator("/meus-pedidos"),
     },
     {
       icon: <HelpCircle className="w-4 h-4" />,
@@ -76,14 +76,14 @@ export function Header() {
               Ajuda
             </a>
             <a
-              onClick={() => navigator("/orders")}
+              onClick={() => navigator("/meus-pedidos")}
               className="flex items-center gap-2 text-white/90 hover:text-white transition-colors cursor-pointer"
             >
               <Package className="w-4 h-4" />
               Meus pedidos
             </a>
             <Button
-              onClick={() => navigator('/login')}
+              onClick={() => navigator('/entrar')}
               variant="secondary"
               className="flex items-center gap-2 hover:bg-white/90"
             >
@@ -91,7 +91,7 @@ export function Header() {
               Entrar
             </Button>
             <Button
-              onClick={() => navigator('/register')}
+              onClick={() => navigator('/criar-conta')}
               variant="outline"
               className="text-black border-white hover:bg-white"
             >

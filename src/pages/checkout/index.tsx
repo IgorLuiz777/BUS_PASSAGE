@@ -72,7 +72,7 @@ export function CheckoutPage() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log("Payment data:", data);
     console.log("Passengers:", passengers);
-    navigate("/success");
+    navigate("/compra-realizada");
     setIsLoading(false);
   };
 

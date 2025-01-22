@@ -19,7 +19,7 @@ import {
   TooltipProvider,
 } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 
 interface Seat {
   number: string;
@@ -358,7 +358,7 @@ export function TripDetailsPage() {
                   <Button
                     className="w-full"
                     size="lg"
-                    onClick={() => navigate("/checkout")}
+                    onClick={() => navigate("/finalizar-compra")}
                   >
                     Continuar
                   </Button>
