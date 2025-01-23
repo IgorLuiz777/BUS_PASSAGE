@@ -7,9 +7,7 @@ import {
   Package,
   User,
   UserPlus,
-  Menu,
-  Compass,
-  Tag
+  Menu
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/auth";
