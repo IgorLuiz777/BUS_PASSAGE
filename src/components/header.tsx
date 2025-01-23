@@ -12,52 +12,59 @@ import {
   Tag
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/store/auth";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const navigator = useNavigate();
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+  const logOut = useAuthStore(state => state.logout)
+
+  const logOutHandler = () => {
+    logOut()
+    navigator('/entrar')
+  }
 
   const menuItems = [
     {
-      icon: <User className="w-4 h-4" />,
-      label: "Entrar",
-      variant: "default" as const,
-      onClick: () => navigator("/entrar"),
-    },
-    {
-      icon: <UserPlus className="w-4 h-4" />,
-      label: "Criar conta",
-      variant: "outline" as const,
-      onClick: () => navigator("/criar-conta"),
-    },
-    {
-      icon: <Package className="w-4 h-4" />,
-      label: "Meus pedidos",
-      variant: "ghost" as const,
-      onClick: () => navigator("/meus-pedidos"),
-    },
-    {
-      icon: <HelpCircle className="w-4 h-4" />,
       label: "Ajuda",
-      variant: "ghost" as const,
-      onClick: () => { },
+      icon: HelpCircle,
+      variant: "outline" as const,
+      action: () => {},
+      showWhenAuthenticated: true
     },
     {
-      icon: <Tag className="w-4 h-4" />,
-      label: "Ofertas",
-      variant: "ghost" as const,
-      onClick: () => { },
+      label: "Meus pedidos",
+      icon: Package,
+      variant: "outline" as const,
+      action: () => navigator("/meus-pedidos"),
+      showWhenAuthenticated: true
     },
     {
-      icon: <Compass className="w-4 h-4" />,
-      label: "Explorar",
-      variant: "ghost" as const,
-      onClick: () => { },
+      label: "Entrar",
+      icon: User,
+      variant: "default" as const,
+      action: () => navigator('/entrar'),
+      showWhenAuthenticated: false
     },
+    {
+      label: "Criar conta",
+      icon: UserPlus,
+      variant: "outline" as const,
+      action: () => navigator('/criar-conta'),
+      showWhenAuthenticated: false
+    },
+    {
+      label: "Sair",
+      icon: User,
+      variant: "secondary" as const,
+      action: logOutHandler,
+      showWhenAuthenticated: true
+    }
   ];
 
   return (
-    <header className="bg-primary text-primary-foreground sticky top-0 z-50">
+    <header className="bg-primary text-white py-4 px-4 md:px-8">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -71,33 +78,49 @@ export function Header() {
           </div>
 
           <nav className="hidden md:flex items-center gap-6">
-            <a href="#" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors">
-              <HelpCircle className="w-4 h-4" />
-              Ajuda
-            </a>
-            <a
-              onClick={() => navigator("/meus-pedidos")}
-              className="flex items-center gap-2 text-white/90 hover:text-white transition-colors cursor-pointer"
-            >
-              <Package className="w-4 h-4" />
-              Meus pedidos
-            </a>
-            <Button
-              onClick={() => navigator('/entrar')}
-              variant="secondary"
-              className="flex items-center gap-2 hover:bg-white/90"
-            >
-              <User className="w-4 h-4" />
-              Entrar
-            </Button>
-            <Button
-              onClick={() => navigator('/criar-conta')}
-              variant="outline"
-              className="text-black border-white hover:bg-white"
-            >
-              <UserPlus className="w-4 h-4" />
-              Criar conta
-            </Button>
+            {isAuthenticated && (
+              <>
+                <a href="#" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors">
+                  <HelpCircle className="w-4 h-4" />
+                  Ajuda
+                </a>
+                <a
+                  onClick={() => navigator("/meus-pedidos")}
+                  className="flex items-center gap-2 text-white/90 hover:text-white transition-colors cursor-pointer"
+                >
+                  <Package className="w-4 h-4" />
+                  Meus pedidos
+                </a>
+                <Button
+                  onClick={logOutHandler}
+                  variant="secondary"
+                  className="flex items-center gap-2 hover:bg-white/90"
+                >
+                  <User className="w-4 h-4" />
+                  Sair
+                </Button>
+              </>
+            )}
+            {!isAuthenticated && (
+              <>
+                <Button
+                  onClick={() => navigator('/entrar')}
+                  variant="secondary"
+                  className="flex items-center gap-2 hover:bg-white/90"
+                >
+                  <User className="w-4 h-4" />
+                  Entrar
+                </Button>
+                <Button
+                  onClick={() => navigator('/criar-conta')}
+                  variant="outline"
+                  className="text-black border-white hover:bg-white"
+                >
+                  <UserPlus className="w-4 h-4" />
+                  Criar conta
+                </Button>
+              </>
+            )}
           </nav>
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -111,31 +134,40 @@ export function Header() {
                 <span className="sr-only">Abrir menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-white">
+            <SheetContent side="right" className="w-[300px] bg-white">
               <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
+                <SheetTitle className="flex items-center gap-2 text-primary">
+                  <Bus className="h-6 w-6" />
+                  BusTrip
+                </SheetTitle>
               </SheetHeader>
-              <nav className="flex flex-col gap-4 mt-8">
-                {menuItems.map((item, index) => (
-                  <Button
-                    key={index}
-                    variant={item.variant}
-                    className={`w-full justify-start gap-2 text-left bg-white ${item.variant === "default"
-                      ? "bg-primary text-white hover:bg-primary/90"
-                        : item.variant === "outline"
-                        ? "border-primary text-primary hover:bg-primary/10"
-                        : "text-gray-700 hover:bg-gray-100 bg-gray-100/70"
+              <div className="mt-8 space-y-2">
+                {menuItems
+                  .filter(item =>
+                    (isAuthenticated && item.showWhenAuthenticated) ||
+                    (!isAuthenticated && !item.showWhenAuthenticated)
+                  )
+                  .map((item, index) => (
+                    <Button
+                      key={index}
+                      onClick={() => {
+                        item.action();
+                        setIsOpen(false);
+                      }}
+                      variant={item.variant}
+                      className={`w-full justify-start gap-2 text-left bg-white ${
+                        item.variant === "default"
+                          ? "bg-primary text-white hover:bg-primary/90"
+                          : item.variant === "outline"
+                            ? "border-primary text-primary hover:bg-primary/10"
+                            : "text-gray-700 hover:bg-gray-100 bg-gray-100/70"
                       }`}
-                    onClick={() => {
-                      item.onClick();
-                      setIsOpen(false);
-                    }}
-                  >
-                    {item.icon}
-                    {item.label}
-                  </Button>
-                ))}
-              </nav>
+                    >
+                      <item.icon className="w-4 h-4" />
+                      {item.label}
+                    </Button>
+                  ))}
+              </div>
             </SheetContent>
           </Sheet>
         </div>

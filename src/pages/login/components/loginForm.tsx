@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAuthStore } from "@/store/auth";
 
 const signInSchema = z.object({
   email: z.string().email("E-mail inválido"),
@@ -36,8 +37,16 @@ export function LoginForm() {
   async function onSubmit(data: SignInValues) {
     try {
       setIsLoading(true);
-      // Simulando login
-      console.log("Login com:", data);
+      const mockUser = {
+        id: "mock-user-123",
+        name: "Mock Silva",
+        email: data.email
+      };
+      const mockToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
+      const { login } = useAuthStore.getState();
+      login(mockUser, mockToken);
+
       navigate("/");
     } catch (error) {
       console.error("Erro ao fazer login:", error);
