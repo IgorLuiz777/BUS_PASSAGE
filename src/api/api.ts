@@ -27,7 +27,7 @@ const onResponseError = (error: AxiosError) => {
       toast.error('Você precisa estar logado para acessar este recurso.');
       sessionStorage.removeItem(sessionKey);
       sessionStorage.removeItem('token');
-      window.location.href = '/login';
+      window.location.href = '/entrar';
       break;
     case 500:
       toast.error('Erro de processamento no servidor.');

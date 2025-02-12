@@ -40,7 +40,7 @@ export function SignInPage() {
           <p className="px-8 text-center text-sm text-muted-foreground">
             Não tem uma conta?{" "}
             <Link
-              to="/register"
+              to="/criar-conta"
               className="underline underline-offset-4 hover:text-primary"
             >
               Criar conta

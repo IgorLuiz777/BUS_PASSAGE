@@ -43,7 +43,7 @@ export function SignUpPage() {
           <p className="px-8 text-center text-sm text-muted-foreground">
             Já tem uma conta?{" "}
             <Link
-              to="/login"
+              to="/entrar"
               className="underline underline-offset-4 hover:text-primary"
             >
               Faça login
