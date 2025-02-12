@@ -1,12 +1,30 @@
+import { useEffect } from "react";
 import { SearchForm } from "@/components/ui/search-form";
 import { FeaturedDestinations } from "@/components/featured-destinations";
 import { FeaturedTrips } from "@/components/featured-trips";
 import type { SearchParams } from "@/types";
+import { Bubble } from "@typebot.io/react";
 
 export function HomePage() {
   const handleSearch = (params: SearchParams) => {
     console.log("Buscar viagens com params:", params);
   };
+
+  useEffect(() => {
+    const loadTypebot = async () => {
+      const { default: Typebot } = await import("https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3.4/dist/web.js");
+      Typebot.initBubble({
+        typebot: "meu-typebot-xzsuc7q",
+        apiHost: "https://typebot.jubimon.tech",
+        theme: {
+          button: { backgroundColor: "#0042DA" },
+          chatWindow: { backgroundColor: "#fff" },
+        },
+      });
+    };
+
+    loadTypebot();
+  }, []);
 
   return (
     <div className="w-full">
@@ -26,6 +44,11 @@ export function HomePage() {
 
       <FeaturedDestinations />
       <FeaturedTrips />
+
+      <Bubble
+        typebot="meu-typebot-xzsuc7q"
+        theme={{ button: { backgroundColor: "#0042DA" } }}
+      />
     </div>
   );
 }
